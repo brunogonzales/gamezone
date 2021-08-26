@@ -1,7 +1,21 @@
 import React, { useState } from "react";
 import * as Font from "expo-font";
-import Home from "./screens/home";
 import AppLoading from "expo-app-loading";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { NavigationContainer } from "@react-navigation/native";
+import Home from "./screens/home";
+import ReviewDetails from "./screens/reviewDetails";
+
+const Stack = createNativeStackNavigator();
+
+function HomeStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="ReviewDetails" component={ReviewDetails} />
+    </Stack.Navigator>
+  );
+}
 
 const getFonts = () =>
   Font.loadAsync({
@@ -13,7 +27,11 @@ export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
 
   if (fontsLoaded) {
-    return <Home />;
+    return (
+      <NavigationContainer>
+        <HomeStack />
+      </NavigationContainer>
+    );
   } else {
     return (
       <AppLoading
